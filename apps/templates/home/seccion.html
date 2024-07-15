@@ -1,0 +1,58 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Page User {% endblock %} 
+
+<!-- agregar css -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<!-- seccion.html -->
+<div class="alumnos-page">
+    <div class="seccion-container">
+        {% for grupo, años in grupos.items %}
+        <div class="seccion-card" data-simplebar>
+            <button id="resetBtn2" style="display: none;"><span class="material-symbols-outlined">close</span></button>
+            <h2>{{ grupo }}</h2>
+            {% if años %}
+            <ul class="cursos-list">
+                {% for año in años %}
+                <li class="curso-item">
+                    <div class="curso-header" onclick="toggleDetails(this)">
+                        {{ año }}
+                    </div>
+                    <div class="curso-details">
+                        <ul class="asignaturas-list">
+                            {% for materia, _ in notas.items %}
+                            <li>{{ materia }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No hay cursos disponibles para este grupo.</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock content %}
+
+<!-- agregar js -->
+{% block javascripts %}
+<script>
+    
+</script>
+
+{% endblock javascripts %}

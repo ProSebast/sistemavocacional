@@ -123,7 +123,6 @@ html, body {
 
     .profile-content {
         left: 7%;
-    
         height: 20%; /* Reducir la altura a la mitad */
         margin-top: 10%; /* Ajustar el margen superior para centrarlo */
     }
@@ -736,7 +735,6 @@ html, body {
     transition: max-width 0.5s ease-in-out;
     font-family: 'Montserrat', sans-serif;
     color: white;
-    border: #4CAF50 2px solid;
     z-index: 10;
     margin: 10px;
 }
@@ -804,7 +802,7 @@ html, body {
     height: 95vh;
     margin: 0 auto;
     top: 0  ;
-    border: #4CAF50 2px solid;
+    
     overflow-y: hidden; /* Cambia la altura a 80% del alto de la ventana */
 }
 
@@ -952,9 +950,738 @@ html, body {
     outline: none; /* Quitar el borde de enfoque por defecto */
     box-shadow: 0 0 0 3px rgba(98, 0, 234, 0.5); /* Añadir un contorno de enfoque */
   }
-  
 
 
 
+
+
+  #testForm {
+    transition: transform 0.8s ease; /* Transición suave de 0.3 segundos */
+}
+
+.transition-slide {
+    transition: transform 0.3s ease;
+}
+
+#progress-bar {
+    position: absolute;
+    width: 80%; /* Ancho completo */
+    background-color: transparent; /* Color de fondo */
+    height: 2px; /* Altura de la barra */
+    border-radius: 4px; /* Bordes redondeados */
+    margin-bottom: 20px; /* Espacio inferior */
+    top: 4%;
+}
+
+#progress {
+    height: 100%; /* Altura completa */
+    background-color: white; /* Color de la barra de progreso */
+    border-radius: 4px; /* Bordes redondeados */
+    transition: width 0.3s ease-in-out; /* Animación de transición suave */
+}
+
+.column-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
  
+.vocac-page {
+    position: relative  ;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 99.7vw;
+    height: 95vh;
+    margin: 0 auto;
+    top: 0  ;
+    
+    overflow-y: hidden; /* Cambia la altura a 80% del alto de la ventana */
+}
+
+.notas-page {
+    position: relative  ;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 99.7vw;
+    height: 95vh;
+    margin: 0 auto;
+    top: 0  ;
+    font-size: smaller;
+    /* Cambia la altura a 80% del alto de la ventana */
+}
+
+.notas-page h1{
+    font-size: medium;
+    font-weight: 700;
+    letter-spacing: 20%;
+}
+
+.notas-page th{
+    font-size: medium;
+    font-weight: 600;
+    letter-spacing: 20%;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+}
+
+
+
+.notas-page td{
+    text-transform: capitalize;
+    font-size: smaller;
+    padding-bottom: 10px;
+}
+
+.notas-page input{
+    border-radius: 5%;
+    border: none;
+    width: 5em;
+    font-family: 'Montserrat', sans-serif;  
+    font-weight: 600;
+    color: #242424;
+}
+
+.notash1{
+    position: relative;
+    text-align: center ;
+    top: 0;
+    text-transform: uppercase;
+}
+
+.notas-btn1{
+    position: relative;
+    justify-content: center;
+    align-self: center;
+    text-align: center ;
+    top: 0;
+    width: 5em;
+
+}
+
+.notas-page button {
+    background-color: transparent; /* Color de fondo del botón */
+    color: white;              /* Color del texto */
+    border: none;      
+    font-family: 'Montserrat', sans-serif;        /* Sin borde */
+    border-radius: 4px;        /* Bordes redondeados */
+    padding: 10px 20px;        /* Espaciado interno del botón */
+    font-size: 30px;           /* Tamaño de la fuente */
+    cursor: pointer;           /* Cambiar el cursor al pasar sobre el botón */
+    scale: 1.5;
+    transition: scale 0.2s; /* Transición para cambios de color y sombra */
+  }
   
+  .notas-page button:hover {
+    scale: 1.2;
+     /* Sombra al pasar el ratón */
+  }
+  
+  
+  
+  .notas-page button:focus {
+    outline: none; /* Quitar el borde de enfoque por defecto */
+     /* Añadir un contorno de enfoque */
+  }
+
+
+.vocac-container {
+    position: relative;
+    display: flex;
+    justify-content: center; /* Centra los elementos internamente horizontalmente */
+    align-items: center; /* Centra los elementos internamente verticalmente */
+    border-radius: 6px;
+    max-width: 80%;
+    height: 70%;
+    width: 60%;
+    padding: 20px;
+    transition: max-width 0.5s ease-in-out;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    z-index: 10;
+    background: linear-gradient(to bottom, rgba(253, 87, 46, 1), rgba(253, 87, 46, 0.767), rgba(253, 87, 46, 0)); /* Gradiente desde #fd572ea2 (opaco) hasta transparente */ /* Fondo con color sólido semi-transparente */
+}
+
+.notas-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center; /* Centra los elementos internamente verticalmente */
+    align-items: center; /* Centra los elementos internamente horizontalmente */
+    border-radius: 6px;
+    max-width: 90%;
+    height: 75%;
+    width: 80%;
+    padding: 20px;
+    transition: max-width 0.5s ease-in-out;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    z-index: 10;
+    background: linear-gradient(to bottom, rgba(253, 87, 46, 1), rgba(253, 87, 46, 0.767), rgba(253, 87, 46, 0));
+    /* Gradiente desde #fd572ea2 (opaco) hasta transparente */ /* Fondo con color sólido semi-transparente */
+}
+
+/* Estilos generales que aplican a todos los contenedores */
+.notas-container {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    max-width: 90%;
+    height: 75%;
+    width: 80%;
+    padding: 20px;
+    transition: max-width 0.5s ease-in-out;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    z-index: 10;
+    background: linear-gradient(to bottom, rgba(253, 87, 46, 1), rgba(253, 87, 46, 0.767), rgba(253, 87, 46, 0));
+    /* Gradiente desde #fd572ea2 (opaco) hasta transparente */ /* Fondo con color sólido semi-transparente */
+}
+
+.notas-container .row {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.notas-container .item {
+    margin: 5px;
+    padding: 10px;
+  
+    border-radius: 6px;
+    text-align: center;
+    flex: 1;
+}
+
+input[type="number"]:focus {
+    font-family: 'Montserrat', sans-serif;
+    scale: 1.1;
+    outline: none;
+    
+}
+
+.editpos {
+    position: absolute;
+    top: 0;
+    right: 0;
+    scale: 0.7;
+}
+
+.notas-container .item.large {
+    flex: 2; /* Elementos grandes ocupan el doble de espacio */
+     /* Fondo semi-transparente */
+}
+
+.notas-container .item.large table{
+    width: 70%;
+}
+button a {
+    color: white;
+    text-decoration: none;
+
+}
+
+.notas-page ul li {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    margin-bottom: 10px; /* Ajusta el espacio entre elementos de la lista */
+    padding-bottom: 10px; /* Espacio inferior para la línea */
+    text-transform: uppercase;
+    border-bottom: 2px solid #323f6471;
+    clip-path: polygon(10% 0, 90% 0, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0 90%, 0 10%);
+}
+
+.h1position{
+    position: relative;
+    width: 100%;
+    
+}
+
+.pnotasTitle{
+    margin-bottom: 5%;
+    text-transform: uppercase;
+    font-size: large;
+    font-weight: bold;
+}
+
+.ulborder {
+    position: relative; /* Necesario para que los elementos hijos posicionados absolutamente se ajusten a este contenedor */
+    padding: 5%; /* Ajusta el padding según sea necesario */
+    background-color: transparent; /* Fondo del contenedor */
+    border: 2px solid #323f6471; /* Borde del contenedor */
+    clip-path: polygon(10% 0%, 90% 0%, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0% 90%, 0% 10%); /* Esquinas recortadas */
+}
+
+.tablepos{
+    width: 100%;
+}
+
+ul.materias li {
+    margin-bottom: 20px;
+    text-transform: capitalize;
+}
+
+.notas-container p {
+    padding-bottom: 15px;
+    top: 0;
+}
+
+
+
+.notas-container .item.small {
+    flex: 0.25; /* Elemento pequeño ocupa la mitad de espacio */
+    
+}
+
+
+.vocac-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    height: 85%;
+    min-width: 200px;
+    border-radius: 10px;
+    transition: transform 0.4s ease-in-out, height 0.4s ease-in-out;
+    max-height: 80%;
+    min-height: 60px; /* Altura mínima asegurada */
+    overflow-y: hidden; /* Habilitar scroll vertical si el contenido excede el tamaño */
+    width: 100%; /* Establecer ancho al 100% del contenedor padre */
+    box-sizing: border-box; /* Incluir padding y border en el ancho total */
+}
+
+.pregunta {
+    padding: 10px; /* Espacio interno alrededor del contenido de la pregunta */
+    margin-bottom: 20px; /* Espacio entre preguntas */
+    width: 100%; /* Ancho completo */
+    
+}
+
+
+.pregunta p {
+    font-size: 16px; /* Tamaño de fuente del texto de la pregunta */
+    line-height: 1.5; /* Espaciado entre líneas */
+    margin-bottom: 10px; /* Espacio inferior */ 
+    font-weight: 500;
+}
+
+/* Ocultar los checkboxes originales */
+.pregunta input[type="checkbox"] {
+    opacity: 0;
+    position: absolute;
+}
+
+/* Estilo personalizado para el contenedor del checkbox */
+.pregunta input[type="checkbox"] + label {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    display: inline-block;
+    color: white;
+    font-weight: 300;
+}
+
+/* Crear el círculo */
+.pregunta input[type="checkbox"] + label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 15px;
+    height: 15px;
+    border: 2px solid #fd572e; /* Cambia el color del borde aquí */
+    border-radius: 50%;
+    background: white;
+}
+
+/* Crear el check */
+.pregunta input[type="checkbox"]:checked + label::after {
+    content: '\2714'; /* Carácter Unicode para el tick */
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) scale(1.2); /* Aumentar el tamaño del tick */
+    font-size: 24px;
+    color: #3d5a80; /* Cambia el color del tick aquí */
+    font-weight: bold; /* Aplica font-weight aquí */
+    transition: all 0.3s ease-in-out; /* Transición suave para el tick */
+    text-shadow: 
+        -1px -1px 0 white,  
+         1px -1px 0 white,
+        -1px  1px 0 white,
+         1px  1px 0 white; /* Añade el contorno */
+}
+
+/* Estilizar el tick cuando no está seleccionado */
+.pregunta label::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) scale(0);
+    font-size: 24px;
+    color: #3d5a80;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Ajuste del espaciado entre las respuestas */
+.pregunta label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.h1-test{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* Estilo para el contenedor de botones */
+.button-container {
+    text-align: center; /* Centra los botones horizontalmente */
+}
+
+/* Estilo para los botones */
+.prevButton, .nextButton, #submitBtn {
+    position: relative;
+    margin: 1px; /* Añade un margen entre los botones */
+    align-items: center;
+    justify-items: center;
+    width: 50%;
+    background-color: transparent; /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    font-family: 'montserrat', sans-serif; /* Fuente */
+    font-weight: bold;
+    margin-top: 80%;
+    margin-bottom: 80%;
+    text-align: center;
+    scale: 1.3;
+    cursor: pointer; /* Cambia el cursor a la mano clickera */
+    transition: transform 0.3s ease, color 0.3s ease; /* Transición suave para cambios de transformación y color */
+    
+}
+
+.prevButton:hover {
+    
+    color: #fff; /* Cambia el color del texto al pasar el cursor */
+    transform: scale(1.6); /* Escala ligeramente el botón al pasar el cursor */
+}
+
+/* Estilo para hover en .nextButton */
+.nextButton:hover {
+    
+    color: #fff; /* Cambia el color del texto al pasar el cursor */
+    transform: scale(1.6); /* Escala ligeramente el botón al pasar el cursor */
+}
+
+/* Estilo para hover en #submitBtn */
+#submitBtn:hover {
+    
+    color: #fff; /* Cambia el color del texto al pasar el cursor */
+    transform: scale(1.3); /* Escala ligeramente el botón al pasar el cursor */
+}
+
+
+#startButton {
+    background:    #3d5a80;
+    border-radius: 11px;
+    width:         200px;
+    height:        50px;
+    color:         #ffffff;
+    display:       inline-block;
+    text-align:    center;
+    margin-top: 20%;
+    font-family: 'montserrat', sans-serif;
+    scale: 0.8;
+}
+
+.sigback{
+    position: absolute;
+    display: flex;           /* Utiliza flexbox para alinear elementos */
+    justify-content: center; /* Centra los elementos horizontalmente */
+    align-items: center;     /* Centra los elementos verticalmente */  
+    right: 10%;   /* Ajusta el margen superior según sea necesario */
+    height: 80%;
+    width: 10%;
+
+}
+
+.sigbackbtn button {
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    
+    
+}
+
+.error-message {
+    position: absolute;
+    font-weight: bold;
+    animation: blink-animation 2s infinite; /* Animación de parpadeo */
+    color: #920000;
+    letter-spacing: .15em;
+
+    }
+
+@keyframes blink-animation {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.material-glass {
+    background-color: #3d5a80; /* Color de fondo con transparencia */
+    border: none;
+    color: white;
+    padding: 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px; /* Borde redondeado */
+    transition: background-color 0.3s ease; /* Transición para el efecto de vidrio */
+
+    /* Estilo de vidrio */
+    backdrop-filter: blur(10px); /* Desenfoque del fondo */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); /* Sombra */
+
+    /* Efecto de profundidad */
+    transform: translateZ(0);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.material-glass:hover {
+    background-color: #3d5a80; /* Color de fondo al pasar el mouse */
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+    transform: translateY(-2px); /* Efecto de elevación al pasar el mouse */
+}
+
+.material-glass svg {
+    vertical-align: middle;
+    margin-left: 6px; /* Espacio entre el texto y el icono SVG */
+}
+
+#resultado-container{
+    position: absolute;
+    margin-top: 10px ;
+    border-radius: 5%;
+    background-color: #3d5a8083;
+    padding: 3%;
+    bottom: 0;
+}
+
+
+#resetBtn{
+    position: absolute;
+    background-color: transparent;
+    color: white;
+    padding: 10px ;
+    font-size: 10%;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+    outline: none;
+    top: 0;
+    right: 0;
+
+}
+
+
+#resetBtn:hover {
+    
+    color: #fff; /* Cambia el color del texto al pasar el cursor */
+    transform: scale(1.3); /* Escala ligeramente el botón al pasar el cursor */
+}
+
+.alumnos-page {
+    position: relative  ;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 99.7vw;
+    height: 95vh;
+    margin: 0 auto;
+    top: 0  ;
+    font-size: smaller;
+    /* Cambia la altura a 80% del alto de la ventana */
+}
+
+.seccion-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center; /* Centra los elementos internamente verticalmente */
+    align-items: center; /* Centra los elementos internamente horizontalmente */
+    border-radius: 6px;
+    max-width: 90%;
+    height: 75%;
+    width: 80%;
+    padding: 20px;
+    transition: max-width 0.5s ease-in-out;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    z-index: 10;
+
+    background: linear-gradient(to bottom, #3d5a80, #3d5a80c5, rgba(253, 87, 46, 0));
+    /* Gradiente desde #fd572ea2 (opaco) hasta transparente */ /* Fondo con color sólido semi-transparente */
+}
+
+.seccion-card {
+    width: 20%;
+    height: 30%;
+    background: linear-gradient(to bottom, rgba(253, 87, 46, 1), rgba(253, 87, 46, 0.692), rgb(190, 54, 20));
+    border-radius: 4%;
+    box-shadow: 10px 10px 1px -1px rgba(20, 0, 20, 0.342);
+    transition: transform 0.3s ease, height 0.3s ease, width 0.3s ease, margin 0.3s ease; /* Ajustamos las transiciones */
+    margin: 2%;
+    padding: 2%;
+    cursor: pointer;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.seccion-card.expanded li {
+    flex-direction: column;
+    display: block;
+    justify-content: flex-start;
+    width: 80%;
+    min-width: 50%;
+    height: 10%;
+    border-radius: 2%;
+    margin: 1%;
+    
+    font-size: 16px;
+    padding: 2%;
+    list-style-type: none;
+    text-transform: uppercase;
+    pointer-events: auto;
+    cursor: pointer;
+    background: linear-gradient(to right, #ff7f5fa2, #feb47b00); /* Gradiente hacia la derecha */
+}
+.seccion-card.expanded li:hover{
+    width: 80%;
+    height: 20%;
+}   
+.curso-item:hover{
+    scale: 1.05;
+    width: 100%;
+    transition: transform 0.3s ease; 
+}
+
+.curso-item {
+    transition: transform 0.3s ease; /* Transición suave de 0.3 segundos */
+}
+
+.seccion-card.expanded ul{
+    
+
+    width: 70%;
+}
+
+.seccion-card li{
+    display: none;
+}
+.seccion-card.expanded {
+    position: relative;
+    flex-direction: column;
+    height: 80%;
+    width: 80%;
+    border-radius: 1%;
+    pointer-events: none;
+    
+    top: 0;
+}
+
+.curso-details {
+    display: none; /* Ocultar por defecto */
+}
+
+.curso-details.expanded {
+    display: block; /* Mostrar cuando se expande */
+}
+
+
+
+.seccion-card.hidden {
+    transform: scale(0.5); /* Escala reducida para ocultar */
+    opacity: 0; /* Oculta la tarjeta */
+    margin: 0; /* Elimina el margen para que no ocupe espacio */
+    display: none;
+    pointer-events: none;
+     /* Deshabilita los eventos de clic en las tarjetas ocultas */
+}
+
+
+
+.seccion-card h2{
+    font-weight: 600;
+    color: white;
+    text-transform: uppercase;
+    padding-top: 55%;
+   
+}
+
+.seccion-card:not(.expanded) h2 {
+    font-size: 14px;
+    text-align: center; /* Tamaño de fuente para elementos no expandidos */
+}
+
+.seccion-card.expanded h2{
+    font-size: 25px;
+    font-weight: 600;
+    color: white;
+    text-transform: uppercase;
+    padding: 10px;
+
+}
+
+.seccion-card:hover {
+    
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+}
+
+
+
+
+
+#resetBtn2{
+    position: absolute;
+    background-color: transparent;
+    color: white;
+    padding: 10px ;
+    font-size: 10%;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+    outline: none;
+    top: 0;
+    right: 0;
+    pointer-events: auto;
+    z-index: 10000;
+
+}
+
+.seccion-card.expanded #resetBtn2 {
+    display: block; /* Mostrar el botón solo cuando la tarjeta esté expandida */
+}
+
+#resetBtn2:hover {
+    cursor: pointer;
+    color: #fff; /* Cambia el color del texto al pasar el cursor */
+    transform: scale(1.3); /* Escala ligeramente el botón al pasar el cursor */
+    
+}

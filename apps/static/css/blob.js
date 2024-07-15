@@ -161,3 +161,37 @@ checkScreenWidth();
 window.addEventListener('resize', checkScreenWidth);
 
 
+document.addEventListener("DOMContentLoaded", function() {
+    const preguntas = document.querySelectorAll('.pregunta');
+    let currentPregunta = 0;
+
+    function showPregunta(index) {
+        preguntas.forEach((pregunta, idx) => {
+            if (idx === index) {
+                pregunta.style.display = 'block';
+            } else {
+                pregunta.style.display = 'none';
+            }
+        });
+    }
+
+    showPregunta(currentPregunta);
+
+    document.querySelectorAll('.nextButton').forEach(button => {
+        button.addEventListener('click', function() {
+            if (currentPregunta < preguntas.length - 1) {
+                currentPregunta++;
+                showPregunta(currentPregunta);
+            }
+        });
+    });
+
+    document.querySelectorAll('.prevButton').forEach(button => {
+        button.addEventListener('click', function() {
+            if (currentPregunta > 0) {
+                currentPregunta--;
+                showPregunta(currentPregunta);
+            }
+        });
+    });
+});
