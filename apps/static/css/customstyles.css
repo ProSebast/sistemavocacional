@@ -950,26 +950,6 @@ html, body {
     outline: none; /* Quitar el borde de enfoque por defecto */
     box-shadow: 0 0 0 3px rgba(98, 0, 234, 0.5); /* Añadir un contorno de enfoque */
   }
-<<<<<<< HEAD
-
-/* css de test vocacional*/
-.container-testvoca {
-    display: flex;
-    justify-content: center; 
-    align-items: flex-start; 
-    padding: 20px 0 20px 0; 
-    height: 100vh;
-}
-
-#content-testvoca {
-    width: 50%; 
-    padding: 20px; 
-    margin: 40px 0 40px 0; 
-    box-sizing: border-box; 
-}
-  
-=======
->>>>>>> 8cd99dfdfd1b250a4d3d9edbe78cd52ef144c901
 
 
 

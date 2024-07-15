@@ -7,33 +7,6 @@
 
 {% block content %}
 
-<<<<<<< HEAD
-<div class="card">
-    <div class="card-header card-header-primary">
-        <h3 class="card-title">Lista de secciones</h3>
-        <p class="card-category">Año 
-          <a>de la sección</a>
-        </p>
-    </div>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-6">
-                <h4 class="card-title">Seleccione el año para ver secciones</h4>
-                {% for nombre_grupo, años_grupo in grupos.items %}
-                    <div class="alert alert-info" onclick="mostrarGrupo('{{ nombre_grupo }}', {{ años_grupo|safe }})">
-                        <h5>{{ nombre_grupo }}</h5>
-                    </div>
-                {% endfor %}
-            </div>
-            <div class="col-md-6">
-                <h4 class="card-title">Secciones</h4>
-                <h1>{{ alumno.id_alumno }}</h1>
-                <div id="alumnos-grupo">
-                    <!-- Aquí se mostrarán los alumnos del grupo seleccionado -->
-                </div>
-            </div>
-        </div>
-=======
 <!-- seccion.html -->
 <div class="alumnos-page">
     <div class="seccion-container">
@@ -50,9 +23,7 @@
                     </div>
                     <div class="curso-details">
                         <ul class="asignaturas-list">
-                            {% for materia, _ in notas.items %}
-                            <li>{{ materia }}</li>
-                            {% endfor %}
+                            <!-- Iterar sobre las asignaturas si es necesario -->
                         </ul>
                     </div>
                 </li>
@@ -63,13 +34,10 @@
             {% endif %}
         </div>
         {% endfor %}
->>>>>>> 8cd99dfdfd1b250a4d3d9edbe78cd52ef144c901
     </div>
 </div>
 
 
-<<<<<<< HEAD
-=======
 
 
 
@@ -77,27 +45,9 @@
 
 
 
->>>>>>> 8cd99dfdfd1b250a4d3d9edbe78cd52ef144c901
 {% endblock content %}
 
 <!-- agregar js -->
 {% block javascripts %}
-<script>
-<<<<<<< HEAD
-    function mostrarGrupo(nombreGrupo, añosGrupo) {
-        var seccionesHtml = '';
-        añosGrupo.forEach(function (seccion) {
-            seccionesHtml += '<div class="alert alert-success" onclick="mostrarSeccion(\'' + seccion + '\')">' + seccion + '</div>';
-        });
-        document.getElementById('alumnos-grupo').innerHTML = seccionesHtml;
-    }
-    
-    function mostrarSeccion(seccion) {
-        window.location.href = "{% url 'alumnos' %}?seccion=" + encodeURIComponent(seccion);
-    }
-=======
-    
->>>>>>> 8cd99dfdfd1b250a4d3d9edbe78cd52ef144c901
-</script>
 
 {% endblock javascripts %}

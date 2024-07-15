@@ -3,43 +3,6 @@
 {% block title %} Análisis de notas {% endblock %}
 
 {% block content %}
-<<<<<<< HEAD
-    <h1>Análisis de Notas</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Materia</th>
-                <th>Notas</th>
-                <th>Promedio</th>
-                <th>Tendencia</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for dato in datos_materias %}
-            <tr>
-                <td>{{ dato.materia }}</td>
-                <td>{{ dato.notas|join:", " }}</td>
-                <td>{{ dato.promedio }}</td>
-                <td>{{ dato.tendencia }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <p>Promedio general: {{ promedio_general }}</p>
-    {% if mejor_materia %}
-        <p>Mejor materia según las notas: {{ mejor_materia }}</p>
-    {% else %}
-        <p>No hay datos suficientes para determinar la mejor materia.</p>
-    {% endif %}
-    <h2>Listado de materias de mejor a peor promedio:</h2>
-    <ul>
-        {% for dato in materias_ordenadas %}
-        <li>{{ dato.materia }}: {{ dato.promedio }}</li>
-        {% endfor %}
-    </ul>
-    <div class="button-container">
-        <a href="{% url 'notasal' %}" class="button">Registrar Nueva Nota</a>
-=======
     <div class="notas-page">
         <div class="notas-container" data-simplebar>
             <br>
@@ -96,6 +59,5 @@
 
         </div>
 
->>>>>>> 8cd99dfdfd1b250a4d3d9edbe78cd52ef144c901
     </div>
 {% endblock content %}
