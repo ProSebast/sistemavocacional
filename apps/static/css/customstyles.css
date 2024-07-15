@@ -956,17 +956,17 @@ html, body {
 /* css de test vocacional*/
 .container-testvoca {
     display: flex;
-    justify-content: center; /* Centra el contenido horizontalmente */
-    align-items: flex-start; /* Alinea el contenido al inicio del contenedor */
-    padding: 20px 0 20px 0; /* Opcional: añade padding superior e inferior al contenedor */
-    height: 100vh; /* Ajusta según sea necesario */
+    justify-content: center; 
+    align-items: flex-start; 
+    padding: 20px 0 20px 0; 
+    height: 100vh;
 }
 
 #content-testvoca {
-    width: 50%; /* Ajusta según sea necesario */
-    padding: 20px; /* Opcional: añade un poco de padding para espacio interior */
-    margin: 40px 0 40px 0; /* Ajusta según sea necesario: 40px arriba y abajo, 0 a los lados */
-    box-sizing: border-box; /* Asegura que el padding no afecte al ancho total */
+    width: 50%; 
+    padding: 20px; 
+    margin: 40px 0 40px 0; 
+    box-sizing: border-box; 
 }
   
 
