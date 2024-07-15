@@ -10,10 +10,7 @@ class TipoUsuario(models.Model):
         return self.nombre
     class Meta:
         verbose_name_plural = "Tipo Usuarios"  
-<<<<<<< HEAD
-=======
         
->>>>>>> 8cd99dfdfd1b250a4d3d9edbe78cd52ef144c901
 class AñoCurso(models.Model):
     id_añocurso = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=45)
@@ -23,10 +20,7 @@ class AñoCurso(models.Model):
         return self.nombre
     class Meta:
         verbose_name_plural = "Cursos"  
-<<<<<<< HEAD
-=======
         
->>>>>>> 8cd99dfdfd1b250a4d3d9edbe78cd52ef144c901
 class Alumno(models.Model):
     id_alumno = models.AutoField(primary_key=True)
     p_nombre = models.CharField(max_length=45, verbose_name='Primer nombre')
