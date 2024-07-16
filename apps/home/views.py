@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Alumno, AñoCurso, Asignatura
 from apps.home.models import Alumno, AñoCurso, Asignatura
 
