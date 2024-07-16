@@ -3,11 +3,10 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from .models import Alumno, AñoCurso, Asignatura
 from apps.home.models import Alumno, AñoCurso, Asignatura
-from django.http import JsonResponse
-import logging
+
 
 
 
@@ -58,14 +57,16 @@ def alumnos(request):
 
     
     añocursos = AñoCurso.objects.all()
+
     context = {'segment': 'alumnos', 'alumnos': alumnos,'seccion': seccion, 'añocursos': añocursos}
     return render(request, 'home/alumnos.html', context)
 
 @login_required(login_url="/login/")
 def seccion(request):
-    # Obtener todos los años cursos desde la base de datos
+    # Obtener todos los años cursos
     años = AñoCurso.objects.all()
-    asignaturas = Asignatura.objects.all()
+    nombres_ejemplo = ['A', 'B', 'C','D','E','F']
+
     # Crear grupos de cursos
     grupos = {
         'Primeros medios': [],
@@ -73,6 +74,10 @@ def seccion(request):
         'Terceros medios': [],
         'Cuartos medios': [],
     }
+    
+    for grupo in grupos:
+        for nombre in nombres_ejemplo:
+            grupos[grupo].append(f'{grupo} {nombre}')
 
     # Clasificar los años cursos en los grupos adecuados
     for año in años:
@@ -86,9 +91,11 @@ def seccion(request):
         elif nombre.startswith('Cuarto medio'):
             grupos['Cuartos medios'].append(nombre)
 
-    
     # Contexto para pasar a la plantilla
-    context = {'segment': 'alumnos', 'grupos': grupos, 'asignaturas':asignaturas}
+    context = {'segment': 'alumnos', 'grupos': grupos}
+    print(grupos)  # Verifica que grupos esté correctamente poblado
+
+    # Renderizar la plantilla
     return render(request, 'home/seccion.html', context)
 
 notas = {
@@ -403,15 +410,7 @@ def cuestionario(request):
     context = {'segment': 'cuestionario'}
     return render(request, 'home/cuestionario.html', context)
 
-
-@login_required(login_url="/login/")
 def asignaturas(request):
-
     asignaturas = Asignatura.objects.all()
-
-    # Imprime la longitud de asignaturas para verificar si hay datos
-    print(asignaturas)
-    print(Asignatura)
-
-    context = {'segment': 'asignaturas', 'asignaturas': asignaturas, 'Asignatura': Asignatura}
+    context = {'segment': 'cuestionario', 'asignaturas':asignaturas}
     return render(request, 'home/asignaturas.html', context)
