@@ -65,7 +65,6 @@ def alumnos(request):
 def seccion(request):
     # Obtener todos los años cursos
     años = AñoCurso.objects.all()
-    nombres_ejemplo = ['A', 'B', 'C','D','E','F']
 
     # Crear grupos de cursos
     grupos = {
@@ -74,10 +73,6 @@ def seccion(request):
         'Terceros medios': [],
         'Cuartos medios': [],
     }
-    
-    for grupo in grupos:
-        for nombre in nombres_ejemplo:
-            grupos[grupo].append(f'{grupo} {nombre}')
 
     # Clasificar los años cursos en los grupos adecuados
     for año in años:
