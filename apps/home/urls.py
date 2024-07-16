@@ -12,6 +12,7 @@ urlpatterns = [
     path('analisisnota/', views.analisisnota, name='analisisnota'),
     path('testvocacional/', views.testvocacional, name='testvocacional'),
     path('cuestionario/', views.cuestionario, name='cuestionario'),
+    path('asignaturas/', views.asignaturas, name='asignaturas'),
 
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),

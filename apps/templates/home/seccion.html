@@ -18,14 +18,11 @@
             <ul class="cursos-list">
                 {% for año in años %}
                 <li class="curso-item">
+                    <a href="asignaturas.html" style="text-decoration: none; color: inherit; cursor: pointer;">
                     <div class="curso-header" onclick="toggleDetails(this)">
                         {{ año }}
                     </div>
-                    <div class="curso-details">
-                        <ul class="asignaturas-list">
-                            <!-- Iterar sobre las asignaturas si es necesario -->
-                        </ul>
-                    </div>
+                    </a>
                 </li>
                 {% endfor %}
             </ul>
@@ -36,7 +33,6 @@
         {% endfor %}
     </div>
 </div>
-
 
 
 

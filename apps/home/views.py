@@ -5,9 +5,9 @@ from django.template import loader
 from django.urls import reverse
 from django.shortcuts import render, redirect
 from .models import Alumno, AñoCurso
-from apps.home.models import Alumno, AñoCurso
+from apps.home.models import Alumno, AñoCurso, Asignatura
 from django.http import JsonResponse
-import random
+import logging
 
 
 
@@ -66,7 +66,7 @@ def alumnos(request):
 def seccion(request):
     # Obtener todos los años cursos desde la base de datos
     años = AñoCurso.objects.all()
-
+    asignaturas = Asignatura.objects.all()
     # Crear grupos de cursos
     grupos = {
         'Primeros medios': [],
@@ -88,7 +88,7 @@ def seccion(request):
             grupos['Cuartos medios'].append(nombre)
 
     # Contexto para pasar a la plantilla
-    context = {'segment': 'alumnos', 'grupos': grupos}
+    context = {'segment': 'alumnos', 'grupos': grupos, 'asignaturas':asignaturas}
 
     return render(request, 'home/seccion.html', context)
 
@@ -404,3 +404,17 @@ def cuestionario(request):
     context = {'segment': 'cuestionario'}
     return render(request, 'home/cuestionario.html', context)
 
+logger = logging.getLogger(__name__)
+
+@login_required(login_url="/login/")
+def asignaturas(request):
+    asignaturas = Asignatura.objects.all()
+
+    # Imprime la longitud de asignaturas para verificar si hay datos
+    print(len(asignaturas))
+
+    # Loguea información sobre las asignaturas
+    logger.info(f"Lista de asignaturas obtenidas: {asignaturas}")
+
+    context = {'segment': 'asignaturas', 'asignaturas': asignaturas}
+    return render(request, 'home/asignaturas.html', context)
