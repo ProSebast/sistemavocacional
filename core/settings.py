@@ -73,9 +73,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'core.urls'
-LOGIN_REDIRECT_URL = "home"  # Route defined in home/urls.py
-LOGOUT_REDIRECT_URL = "home"  # Route defined in home/urls.py
-TEMPLATE_DIR = os.path.join(CORE_DIR, "apps/templates")  # ROOT dir for templates
+LOGIN_REDIRECT_URL = "home"  # Ruta definida en home/urls.py
+LOGOUT_REDIRECT_URL = "home"  # Ruta definida en home/urls.py
+TEMPLATE_DIR = os.path.join(CORE_DIR, "apps/templates")  # Directorio ROOT para plantillas
 
 TEMPLATES = [
     {
@@ -101,7 +101,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sistemavocacional',
+        'NAME': 'ultima2',
         'USER': 'root',
         'PASSWORD': 'lilo1309',
         'PORT':3306,
@@ -158,3 +158,12 @@ STATICFILES_DIRS = (
 
 #############################################################
 #############################################################
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    # Otros backends de autenticación si los utilizas
+]
+
+LOGIN_URL = '/login/'  # URL a la que se redirige para iniciar sesión
+LOGIN_REDIRECT_URL = '/'

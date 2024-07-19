@@ -1685,3 +1685,34 @@ ul.materias li {
     transform: scale(1.3); /* Escala ligeramente el botón al pasar el cursor */
     
 }
+
+.tituloasig{
+    font-size: large;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 1%;
+    margin-left: 1%;
+}
+
+.edit-form {
+    display: none;
+}
+.edit-button:checked ~ .edit-form {
+    display: block;
+}
+
+.nombre_prof {
+    background: linear-gradient(135deg, #ff5340,#e74c3c, #771005, #000000); /* Gradiente de color de fondo */
+    -webkit-background-clip: text; /* Clip del fondo para el texto (webkit) */
+    background-clip: text; /* Clip del fondo para el texto */
+    color: transparent; /* Hacer el color del texto transparente para mostrar el gradiente */
+    text-align: center; /* Centra el texto horizontalmente */
+    font-size: 3em; /* Tamaño de la letra grande */
+    font-weight: bold; /* Hace que el texto sea negrita */
+    padding: 10px; /* Espaciado interno para un mejor diseño */
+    display: block; /* Asegura que el label se comporte como un bloque */
+    margin: 0 auto; /* Centra el label dentro de su contenedor */
+    width: fit-content; /* Ajusta el ancho del label al contenido */
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7), -1px -1px 2px rgba(243, 72, 4, 0.5); /* Sombra del texto para efecto 3D */
+}

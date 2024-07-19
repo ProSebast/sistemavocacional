@@ -38,20 +38,19 @@ def register_user(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get("Usuario")
-            raw_password = form.cleaned_data.get("Contraseña")
+            username = form.cleaned_data.get("username")
+            raw_password = form.cleaned_data.get("password1")
             user = authenticate(username=username, password=raw_password)
-
-            msg = 'Usuario creado - por favor <a href="/login">Inicia sesión</a>.'
-            success = True
-
-            # return redirect("/login/")
-
+            if user is not None:
+                login(request, user)
+                msg = 'Usuario creado - Iniciaste sesión automáticamente.'
+                success = True
+                return redirect("/")  # Redirige a la página principal después del registro y login exitosos
+            else:
+                msg = 'Error al autenticar el usuario después del registro.'
         else:
-            msg = 'el formulario no es valido'
+            msg = 'Formulario no válido - revisa los campos.'
     else:
         form = SignUpForm()
 
     return render(request, "accounts/register.html", {"form": form, "msg": msg, "success": success})
-
-

@@ -2,12 +2,9 @@
 
 {% block title %} Page User {% endblock %} 
 
-<!-- agregar css -->
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
-
-<!-- seccion.html -->
 <div class="alumnos-page">
     <div class="seccion-container">
         {% for grupo, años in grupos.items %}
@@ -18,10 +15,10 @@
             <ul class="cursos-list">
                 {% for año in años %}
                 <li class="curso-item">
-                    <a href="asignaturas.html" style="text-decoration: none; color: inherit; cursor: pointer;">
-                    <div class="curso-header" onclick="toggleDetails(this)">
-                        {{ año }}
-                    </div>
+                    <a href="{% url 'asignaturas' año.id_añocurso %}" style="text-decoration: none; color: inherit; cursor: pointer;">
+                        <div class="curso-header" onclick="toggleDetails(this)">
+                            {{ año.nombre }}
+                        </div>
                     </a>
                 </li>
                 {% endfor %}
@@ -33,17 +30,6 @@
         {% endfor %}
     </div>
 </div>
-
-
-
-
-
-
-
-
 {% endblock content %}
 
-<!-- agregar js -->
-{% block javascripts %}
-
-{% endblock javascripts %}
+{% block javascripts %}{% endblock javascripts %}

@@ -11,32 +11,38 @@
         <br><br>
         <ul class="nav">
             {% if request.user.is_authenticated %}
+                             
                 <li class="nav-item {% if 'perfil' in segment %} active {% endif %}">
-                    <a class="nav-link" href="/apps/templates/home/perfil.html">
+                    <a class="nav-link" href="{% url 'perfil' %}">
                         <i class="material-icons">person</i>
                         <p>Perfil</p>
                     </a>
                 </li>
+                {% if user.profesor.tipo_usuario.nombre == 'Profesor' %}  
                 <li class="nav-item {% if 'alumnos' in segment %} active {% endif %}">
-                    <a class="nav-link" href="/seccion">
+                    <a class="nav-link" href="{% url 'seccion' %}">
                         <i class="material-icons">content_paste</i>
                         <p>Alumnos</p>
                     </a>
                 </li>
+                {% endif %}
+                {% if user.alumno.tipo_usuario.nombre == 'Alumno' %}   
                 <li class="nav-item {% if 'notas' in segment %} active {% endif %}">
-                    <a class="nav-link" href="/notasal">
+                    <a class="nav-link" href="{% url 'notasal' %}">
                         <i class="material-icons">library_books</i>
                         <p>Notas</p>
                     </a>
                 </li>
+                
                 <li class="nav-item {% if 'testvocacional' in segment %} active {% endif %}">
-                    <a class="nav-link" href="/testvocacional">
+                    <a class="nav-link" href="{% url 'testvocacional' %}">
                         <i class="material-icons">bubble_chart</i>
                         <p>Test Vocacional</p>
                     </a>
                 </li>
+                {% endif %}
                 <li class="nav-item {% if 'cuestionario' in segment %} active {% endif %}">
-                    <a class="nav-link" href="/cuestionario">
+                    <a class="nav-link" href="{% url 'cuestionario' %}">
                         <i class="material-icons">help</i>
                         <p>Cuestionario</p>
                     </a>
@@ -48,6 +54,7 @@
                     </a>
                 </li>
             {% else %}
+                {% if user.profesor.tipo_usuario.nombre == 'Profesor' %} 
                 <li class="nav-item {% if 'perfil' in segment %} active {% endif %}">
                     <a class="nav-link" href="/">
                         <i class="material-icons">person</i>
@@ -55,25 +62,28 @@
                     </a>
                 </li>
                 <li class="nav-item {% if 'alumnos' in segment %} active {% endif %}">
-                    <a class="nav-link" href="/alumnos.html">
+                    <a class="nav-link" href="{% url 'alumnos' %}">
                         <i class="material-icons">content_paste</i>
                         <p>Alumnos</p>
                     </a>
                 </li>
+                {% endif %}
+                {% if user.alumno.tipo_usuario.nombre == 'Alumno' %} 
                 <li class="nav-item {% if 'notas' in segment %} active {% endif %}">
-                    <a class="nav-link" href="/notas.html">
+                    <a class="nav-link" href="{% url 'notas' %}">
                         <i class="material-icons">library_books</i>
                         <p>Notas</p>
                     </a>
-                </li>
+                </li> 
                 <li class="nav-item {% if 'testvocacional' in segment %} active {% endif %}">
-                    <a class="nav-link" href="/testvocacional.html">
+                    <a class="nav-link" href="{% url 'testvocacional' %}">
                         <i class="material-icons">bubble_chart</i>
                         <p>Test Vocacional</p>
                     </a>
                 </li>
+                {% endif %}
                 <li class="nav-item {% if 'cuestionario' in segment %} active {% endif %}">
-                    <a class="nav-link" href="/cuestionario.html">
+                    <a class="nav-link" href="{% url 'cuestionario' %}">
                         <i class="material-icons">help</i>
                         <p>Cuestionario</p>
                     </a>
