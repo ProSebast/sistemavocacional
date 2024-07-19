@@ -74,14 +74,10 @@ def perfil(request):
     }
     return render(request, 'home/perfil.html', context)
 
-<<<<<<< HEAD
-def alumnos(request):
-=======
 @login_required(login_url="/login/")
 def alumnos(request, asignatura_id):
     asignatura = Asignatura.objects.get(id_asignatura=asignatura_id)
     alumnos = Alumno.objects.all()
->>>>>>> 9cfea19a383b0b51be4c0101e508693aed125eb3
     
     calificaciones = Calificaciones.objects.filter(asignatura=asignatura)
     calificaciones_dict = {
@@ -291,21 +287,7 @@ def notasal(request):
 
     return render(request, 'home/notasal.html', context)
 
-<<<<<<< HEAD
-def notas(request):
-    segment = 'notas.html'
-    context = {'segment': segment}
-    html_template = loader.get_template('home/notas.html')
-    return HttpResponse(html_template.render(context, request))
-
-
-
-
-
-
-=======
 @login_required(login_url="/login/")
->>>>>>> 9cfea19a383b0b51be4c0101e508693aed125eb3
 def testvocacional(request):
 
 
@@ -436,16 +418,6 @@ def testvocacional(request):
             {'opcion': 'I', 'texto': 'Organizar eventos y coordinar servicios turísticos.'}  # Turismo y Hotelería
         ]}]
 
-<<<<<<< HEAD
-    context = {'preguntas': preguntas}  # EH aquí está el cambio
-
-    if request.method == 'POST':
-        respuestas = request.POST
-#verificacion de preguntas
-        if all(f'pregunta_{i+1}' in respuestas for i in range(len(preguntas))):
-            puntuaciones = {f'pregunta_{i+1}': respuestas.get(f'pregunta_{i+1}') for i in range(len(preguntas))}
-#guardado
-=======
     context = {'preguntas': preguntas}
 
     if request.method == 'POST':
@@ -461,7 +433,6 @@ def testvocacional(request):
             print(puntuaciones)
 
             # Cálculo de puntajes y determinación del resultado
->>>>>>> 9cfea19a383b0b51be4c0101e508693aed125eb3
             puntajes = {
                 'Ingeniería Civil': 0,
                 'Medicina': 0,
@@ -493,31 +464,6 @@ def testvocacional(request):
                     puntajes['Tecnología de la Información'] += 1
                 elif respuesta == 'I':
                     puntajes['Turismo y Hotelería'] += 1
-<<<<<<< HEAD
-#sacarpuntaje mas alto
-            max_puntaje = max(puntajes.values())
-            max_puntajes = [key for key, value in puntajes.items() if value == max_puntaje]
-#empate de vocaciones
-            if len(max_puntajes) > 1:
-                resultado = "Hay un empate entre varias opciones vocacionales."
-            else:
-                resultado = f"Tu perfil es: {max_puntajes[0]}"
-
-            context['resultado'] = resultado
-        else:
-            context['error_message'] = "Debes responder todas las preguntas." #error por noresponder todo
-
-    html_template = loader.get_template('home/testvocacional.html')
-    return HttpResponse(html_template.render(context, request))
-
-
-
-
-
-#///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-=======
 
             # Determinar la vocación con mayor puntaje
             max_puntaje = max(puntajes.values())
@@ -549,7 +495,6 @@ def testvocacional(request):
 
     # Si es una solicitud GET inicial, renderizar la página con el formulario
     return render(request, 'home/testvocacional.html', context)
->>>>>>> 9cfea19a383b0b51be4c0101e508693aed125eb3
 
 def cuestionario(request):
     context = {'segment': 'cuestionario'}
