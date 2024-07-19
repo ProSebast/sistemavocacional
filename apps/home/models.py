@@ -2,6 +2,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
+
 class TipoUsuario(models.Model):
     id_tipousuario = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100)
@@ -10,6 +12,7 @@ class TipoUsuario(models.Model):
         return self.nombre
     class Meta:
         verbose_name_plural = "Tipo Usuarios"  
+        
 class AñoCurso(models.Model):
     id_añocurso = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=45)
@@ -19,7 +22,9 @@ class AñoCurso(models.Model):
         return self.nombre
     class Meta:
         verbose_name_plural = "Cursos"  
+        
 class Alumno(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     id_alumno = models.AutoField(primary_key=True)
     p_nombre = models.CharField(max_length=45, verbose_name='Primer nombre')
     s_nombre = models.CharField(max_length=45, blank=True, null=True, verbose_name='Segundo nombre')
@@ -34,10 +39,12 @@ class Alumno(models.Model):
 
     def __str__(self):
         return f"{self.id_alumno} {self.p_nombre} {self.apellido_pat} {self.apellido_mat} {self.direccion} {self.numero_apoderado}"
+
     class Meta:
-        verbose_name_plural = "Alumnos"  
-    
+        verbose_name_plural = "Alumnos"   
+
 class Profesor(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     id_profesor = models.AutoField(primary_key=True)
     p_nombre = models.CharField(max_length=45, verbose_name='Primer nombre')
     s_nombre = models.CharField(max_length=45, blank=True, null=True, verbose_name='Segundo nombre')
@@ -46,7 +53,11 @@ class Profesor(models.Model):
     correo = models.CharField(max_length=45, verbose_name='Correo')
     celular = models.IntegerField(blank=True, null=True, verbose_name='Celular')
     tipo_usuario = models.ForeignKey(TipoUsuario, on_delete=models.CASCADE)
+<<<<<<< HEAD
     asignaturas = models.ManyToManyField('Asignatura', related_name='profesores', blank=True)
+=======
+    cursos = models.ManyToManyField(AñoCurso, verbose_name='Cursos')
+>>>>>>> 9cfea19a383b0b51be4c0101e508693aed125eb3
 
     def __str__(self):
         return f"{self.p_nombre} {self.apellido_pat} {self.apellido_mat}"
@@ -57,6 +68,7 @@ class Profesor(models.Model):
 class Asignatura(models.Model):
     id_asignatura = models.AutoField(primary_key=True)
     nombre_asig = models.CharField(max_length=45, verbose_name='Asignatura')
+<<<<<<< HEAD
 
     def __str__(self):
         return self.nombre_asig
@@ -64,17 +76,29 @@ class Asignatura(models.Model):
     class Meta:
         verbose_name_plural = "Asignaturas"
         
+=======
+    profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE, verbose_name='Profesor')
+    curso = models.ForeignKey(AñoCurso, on_delete=models.CASCADE, verbose_name='Curso')
+
+    def __str__(self):
+       return f"{self.nombre_asig} {self.profesor} {self.curso}"
+
+    class Meta:
+        verbose_name_plural = "Asignaturas"
+>>>>>>> 9cfea19a383b0b51be4c0101e508693aed125eb3
 class Calificaciones(models.Model):
     id_calificaciones = models.AutoField(primary_key=True)
-    calificacion = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Calificacion')
-    fecha = models.DateField()
+    eva1 = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True, verbose_name='Eva 1')
+    eva2 = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True, verbose_name='Eva 2')
+    eva3 = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True, verbose_name='Eva 3')
     asignatura = models.ForeignKey(Asignatura, on_delete=models.CASCADE, verbose_name='Asignatura')
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE, verbose_name='Alumno')
 
     def __str__(self):
-        return f"{self.calificacion} - {self.asignatura} - {self.alumno}"
+        return f"{self.eva1} {self.eva2} {self.eva3} - {self.asignatura} - {self.alumno}"
+    
     class Meta:
-        verbose_name_plural = "Calificaciones"  
+        verbose_name_plural = "Calificaciones"
 
 class Prediccion(models.Model):
     id_prediccion = models.AutoField(primary_key=True)

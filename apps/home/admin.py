@@ -2,6 +2,11 @@ from django.contrib import admin
 from .models import AñoCurso, Alumno, Asignatura, Profesor, Prediccion, Calificaciones, TipoUsuario
 from django.contrib import admin
 from django.contrib.admin import AdminSite
+from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+
+
+
 
 
 class MyAdminSite(AdminSite):

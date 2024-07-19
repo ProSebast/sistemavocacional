@@ -1,5 +1,7 @@
 {% extends "layouts/base.html" %}
+{% block title %} Test Vocacional {% endblock %}
 
+<<<<<<< HEAD
 {% block title %} Test Vocacional {% endblock %}
 
 {% block stylesheets %}
@@ -29,6 +31,95 @@
 {% elif error_message %}
     <p style="color: red;">{{ error_message }}</p> <!-- mensaje de error -->
 {% endif %}
+=======
+{% block stylesheets %}
+    
+{% endblock stylesheets %}
+
+{% block content %}
+<body>
+    <div id="profile-page" class="vocac-page">
+        <div class="vocac-container" id="vocac-container">
+            
+            <div class="vocac-content">
+                <div id="progress-bar" style="display: none;">
+                    <div id="progress" style="width: 0%;"></div>
+                </div>
+                
+                <div  class="column-container">
+                    <br>
+                    
+                    <h1 class="h1-test">Test de Orientación Vocacional "CSA"</h1>
+                    
+                    <!-- Botón para comenzar el test -->
+                    <button class="material-glass" id="startButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="#fff"/>
+                        </svg>
+                        Comenzar test
+                    </button>
+                </div>
+                
+                <!-- Formulario de preguntas (inicialmente oculto) -->
+                <form id="testForm" action="{% url 'testvocacional' %}" method="post" style="display: none;">
+                    {% csrf_token %}
+                    {% for pregunta in preguntas %}
+                        <div class="pregunta" id="pregunta_{{ forloop.counter }}">
+                            <p>{{ pregunta.pregunta }}</p>
+                            {% for respuesta in pregunta.respuestas %}
+                                <input type="checkbox" id="pregunta_{{ forloop.parentloop.counter }}_respuesta_{{ forloop.counter }}" name="pregunta_{{ forloop.parentloop.counter }}" value="{{ respuesta.opcion }}">
+                                <label for="pregunta_{{ forloop.parentloop.counter }}_respuesta_{{ forloop.counter }}">{{ respuesta.texto }}</label><br>
+                            {% endfor %}
+                            <span class="error-message" style="display: none;">Por favor, responde la pregunta antes de continuar.</span>
+                        </div>
+                    {% endfor %}
+                    
+                    
+                </form>
+                <div id="resultado-container" style="display: none;">
+                    <h2>Resultado del test:</h2>
+                    <p id="resultado">{{ resultado }}</p>
+                    <p id="error_message" style="color: rgb(65, 21, 1);"></p>
+                </div>
+                <!-- Resultado del test -->
+                
+                
+            </div>
+            
+            <!-- Botones de navegación -->
+            <div class="sigback">
+                <p class="sigbackbtn">
+                    <button type="button" class="prevButton" style="display: none;">
+                        <span class="material-symbols-outlined">
+                            chevron_left
+                        </span>
+                    </button>
+                    
+                    <button type="button" class="nextButton">
+                        <span class="material-symbols-outlined">
+                            chevron_right
+                        </span>
+                    </button>
+                    
+                    <button type="submit" id="submitBtn" style="display: none;">
+                        FINALIZAR
+                    </button>
+                    
+                </p>
+            </div>
+            <div>
+                <button id="resetBtn" ><span class="material-symbols-outlined">
+                    close
+                    </span></button>
+            </div>
+            
+        </div>
+    </div>
+    
+</body>
+
+
+>>>>>>> 9cfea19a383b0b51be4c0101e508693aed125eb3
 {% endblock content %}
 </div>
 
@@ -37,3 +128,12 @@
 {% endblock javascripts %}
 
 
+<<<<<<< HEAD
+=======
+
+{% block javascripts %}
+
+{% endblock javascripts %}
+
+
+>>>>>>> 9cfea19a383b0b51be4c0101e508693aed125eb3

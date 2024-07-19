@@ -1,124 +1,111 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Page User {% endblock %} 
+{% block title %} Perfil del Usuario {% endblock %}
 
-<!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
+<body>
+  <div id="profile-page" class="perfil-page">
+    <div class="profile-container" id="profile-container">
+      <div class="profile-content">
+        <button id="edit-profile-btn" class="material-icons">edit</button>
 
-          <div class="row">
-            <div class="col-md-8">
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title">Editar perfil</h4>
-                  <p class="card-category">Completa tu perfil</p>
-                </div>
-                <div class="card-body">
-                  <form>
-                    <div class="row">
-                      <div class="col-md-5">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">UserID (disabled)</label>
-                          <input type="text" class="form-control" disabled value="{{ current_user.id }}">
-                        </div>
-                      </div>
-                      <div class="col-md-3">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Nombre de Usuario</label>
-                          <input type="text" class="form-control" value="{{ current_user.username }}">
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Correo electronico</label>
-                          <input type="email" class="form-control" value="{{ current_user.email }}">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Nombres</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Apellidos</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Dirección</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Ciudad</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Pais</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Numero Postal</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label>Acerca de </label>
-                          <div class="form-group">
-                            <label class="bmd-label-floating"> Profesor de matematicas</label>
-                            <textarea class="form-control" rows="5"></textarea>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary pull-right">Actualizar perfil</button>
-                    <div class="clearfix"></div>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card card-profile">
-                <div class="card-avatar">
-                  <a href="#pablo">
-                    <img class="img" src="/static/assets/img/faces/marc.jpg" />
-                  </a>
-                </div>
-                <div class="card-body">
-                  <h6 class="card-category text-gray">
-                    {{ current_user.username }}
-                  </h6>
-                  <h4 class="card-title">
-                    {{ current_user.email }}
-                  </h4>
-                  <p class="card-description">
-                    Un buen profesor de matemáticas no solo enseña números, sino que también inspira a sus estudiantes a descubrir la belleza y la lógica detrás de ellos.
-                  </p>
-                  <a href="#pablo" class="btn btn-primary btn-round">Seguir</a>
-                </div>
-              </div>
-            </div>
+        <div class="profile-info">
+          <img class="profile-pic" src="/static/css/images/perfil.jpg" alt="Avatar">
+          <div class="profile-info-details">
+            <br>
+            <h4>{{ perfil_usuario.p_nombre }}</h4>
+            <p>{{ perfil_usuario.user.username }}</p>
           </div>
-
+        </div>
+      </div>
+      <div>
+        <div class="parent-container" data-simplebar id="parent-container">
+          <form class="form-editor-profile">
+            {% if tipo_usuario == 'profesor' %}
+            <div>
+              <label>Nombres</label>
+              <input type="text" value="{{ perfil_usuario.p_nombre }}">
+            </div>
+            {% if perfil_usuario.s_nombre %}
+            <div>
+              <label>Segundo Nombre</label>
+              <input type="text" value="{{ perfil_usuario.s_nombre }}">
+            </div>
+            {% endif %}
+            <div>
+              <label>Apellido Paterno</label>
+              <input type="text" value="{{ perfil_usuario.apellido_pat }}">
+            </div>
+            <div>
+              <label>Apellido Materno</label>
+              <input type="text" value="{{ perfil_usuario.apellido_mat }}">
+            </div>
+            <div>
+              <label>Correo</label>
+              <input type="email" value="{{ perfil_usuario.correo }}">
+            </div>
+            <div>
+              <label>Celular</label>
+              <input type="text" value="{{ perfil_usuario.celular }}">
+            </div>
+            <div>
+              <label>Asignaturas</label>
+              <ul>
+                {% for asignatura in asignaturas %}
+                <li style="margin-left: 50%;">{{ asignatura.nombre_asig }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+            <div>
+              <label class="nombre_prof">Profesor</label>
+            </div>
+            {% elif tipo_usuario == 'alumno' %}
+            <div>
+              <label>Nombre de Usuario</label>
+              <input type="text" value="{{ perfil_usuario.user.username }}">
+            </div>
+            <div>
+              <label>Primer Nombre</label>
+              <input type="text" value="{{ perfil_usuario.p_nombre }}">
+            </div>
+            {% if perfil_usuario.s_nombre %}
+            <div>
+              <label>Segundo Nombre</label>
+              <input type="text" value="{{ perfil_usuario.s_nombre }}">
+            </div>
+            {% endif %}
+            <div>
+              <label>Apellido Paterno</label>
+              <input type="text" value="{{ perfil_usuario.apellido_pat }}">
+            </div>
+            <div>
+              <label>Apellido Materno</label>
+              <input type="text" value="{{ perfil_usuario.apellido_mat }}">
+            </div>
+            <div>
+              <label>Fecha de Ingreso</label>
+              <input type="date" value="{{ perfil_usuario.fecha_ingreso }}">
+            </div>
+            <div>
+              <label>Dirección</label>
+              <input type="text" value="{{ perfil_usuario.direccion }}">
+            </div>
+            <div>
+              <label>Numero Apoderado</label>
+              <input type="text" value="{{ perfil_usuario.numero_apoderado }}">
+            </div>
+            <div>
+              <label class="nombre_prof">Alumno</label>
+            </div>
+            {% endif %}
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
 {% endblock content %}
 
-<!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}

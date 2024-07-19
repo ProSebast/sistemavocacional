@@ -3,9 +3,14 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
-from django.shortcuts import render
-from .models import Alumno, AñoCurso
-from apps.home.models import Alumno, AñoCurso
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Alumno, AñoCurso, Asignatura, Calificaciones, Profesor, Calificaciones
+from apps.home.models import Alumno, AñoCurso, Asignatura, Calificaciones, Profesor, Calificaciones
+from django.shortcuts import redirect
+from django.core.exceptions import ValidationError
+from decimal import Decimal, InvalidOperation
+from django.db.models import Avg
+
 
 
 
@@ -23,13 +28,13 @@ def index(request):
 def pages(request):
     context = {}
     load_template = request.path.split('/')[-1]
-
+    
     # Redirigir a la página de administración si la URL es 'admin'
     if load_template == 'admin':
         return HttpResponseRedirect(reverse('admin:index'))
 
     # Si la URL corresponde a una vista específica, renderizar esa vista
-    if load_template in ['seccion', 'notas', 'testvocacional', 'cuestionario']:
+    if load_template in ['seccion', 'notasal', 'testvocacional', 'cuestionario']:
         return globals()[load_template](request)
 
     # Si la URL no coincide con ninguna vista específica, cargar la plantilla HTML correspondiente
@@ -49,52 +54,244 @@ def pages(request):
 
 # paginas
 def perfil(request):
+    tipo_usuario = None
+    perfil_usuario = None
+    asignaturas = None
+    
+    if hasattr(request.user, 'alumno'):
+        tipo_usuario = 'alumno'
+        perfil_usuario = request.user.alumno
+    elif hasattr(request.user, 'profesor'):
+        tipo_usuario = 'profesor'
+        perfil_usuario = request.user.profesor
+        asignaturas = perfil_usuario.asignatura_set.all()
+    
     context = {
-        'segment': 'perfil' 
+        'segment': 'perfil',
+        'tipo_usuario': tipo_usuario,
+        'perfil_usuario': perfil_usuario,
+        'asignaturas': asignaturas
     }
     return render(request, 'home/perfil.html', context)
 
+<<<<<<< HEAD
 def alumnos(request):
+=======
+@login_required(login_url="/login/")
+def alumnos(request, asignatura_id):
+    asignatura = Asignatura.objects.get(id_asignatura=asignatura_id)
+    alumnos = Alumno.objects.all()
+>>>>>>> 9cfea19a383b0b51be4c0101e508693aed125eb3
     
-    seccion = request.GET.get('seccion')
-
-    alumnos = Alumno.objects.filter(año_cursado__nombre=seccion)
-
+    calificaciones = Calificaciones.objects.filter(asignatura=asignatura)
+    calificaciones_dict = {
+        calificacion.alumno.id_alumno: calificacion
+        for calificacion in calificaciones
+    }
     
-    añocursos = AñoCurso.objects.all()
-
-    context = {'segment': 'alumnos', 'alumnos': alumnos,'seccion': seccion, 'añocursos': añocursos}
+    for alumno in alumnos:
+        if alumno.id_alumno not in calificaciones_dict:
+            calificaciones_dict[alumno.id_alumno] = Calificaciones(
+                alumno=alumno,
+                asignatura=asignatura,
+                eva1=None,
+                eva2=None,
+                eva3=None,
+            )
+    
+    context = {
+        'asignatura': asignatura,
+        'alumnos': alumnos,
+        'calificaciones_dict': calificaciones_dict,
+    }
     return render(request, 'home/alumnos.html', context)
 
 
 @login_required(login_url="/login/")
+def guardar_calificaciones(request):
+    if request.method == 'POST':
+        asignatura_id = request.POST.get('asignatura_id')
+        asignatura = Asignatura.objects.get(id_asignatura=asignatura_id)
+
+        for alumno_id in request.POST:
+            if alumno_id.startswith('eva1_'):
+                alumno_id = alumno_id.split('_')[1]
+                eva1 = request.POST.get(f'eva1_{alumno_id}')
+                eva2 = request.POST.get(f'eva2_{alumno_id}')
+                eva3 = request.POST.get(f'eva3_{alumno_id}')
+                alumno = Alumno.objects.get(id_alumno=alumno_id)
+                
+                # Actualiza o crea las calificaciones
+                calificaciones, created = Calificaciones.objects.update_or_create(
+                    alumno=alumno,
+                    asignatura=asignatura,
+                    defaults={
+                        'eva1': eva1 if eva1 else None,
+                        'eva2': eva2 if eva2 else None,
+                        'eva3': eva3 if eva3 else None,
+                    }
+                )
+
+    return redirect('alumnos', asignatura_id=asignatura_id)
+
+@login_required(login_url="/login/")
 def seccion(request):
+    profesor = Profesor.objects.get(user=request.user)
     años = AñoCurso.objects.all()
+    
     grupos = {
         'Primeros medios': [],
         'Segundos medios': [],
         'Terceros medios': [],
         'Cuartos medios': [],
     }
+
     for año in años:
         nombre = año.nombre
         if nombre.startswith('Primero medio'):
-            grupos['Primeros medios'].append(nombre)
+            grupos['Primeros medios'].append(año)
         elif nombre.startswith('Segundo medio'):
-            grupos['Segundos medios'].append(nombre)
+            grupos['Segundos medios'].append(año)
         elif nombre.startswith('Tercero medio'):
-            grupos['Terceros medios'].append(nombre)
+            grupos['Terceros medios'].append(año)
         elif nombre.startswith('Cuarto medio'):
-            grupos['Cuartos medios'].append(nombre)
+            grupos['Cuartos medios'].append(año)
 
-    context = {'segment': 'alumnos', 'grupos': grupos}
+    context = {
+        'segment': 'alumnos',
+        'grupos': grupos,
+        'profesor': profesor
+    }
+
     return render(request, 'home/seccion.html', context)
 
-@login_required(login_url="/login/")
-def notas(request):
-    context = {'segment': 'notas'}
-    return render(request, 'home/notas.html', context)
 
+@login_required(login_url="/login/")
+def analisisnota(request):
+    # Obtén el alumno logeado
+    alumno = request.user.alumno
+    
+    # Filtra las calificaciones para el alumno logeado
+    calificaciones = Calificaciones.objects.filter(alumno=alumno)
+    
+    # Agrupa las calificaciones por materia
+    notas_materias = {}
+    for calificacion in calificaciones:
+        asignatura = calificacion.asignatura
+        materia = asignatura.nombre_asig
+        notas_materias.setdefault(materia, [])
+        notas_materias[materia].extend([
+            calificacion.eva1 if calificacion.eva1 is not None else 0,
+            calificacion.eva2 if calificacion.eva2 is not None else 0,
+            calificacion.eva3 if calificacion.eva3 is not None else 0
+        ])
+    
+    # Calcular estadísticas de las notas
+    datos_materias = []
+    for materia, notas_materia in notas_materias.items():
+        if notas_materia:  # Verifica si hay notas disponibles
+            promedio = round(sum(notas_materia) / len(notas_materia), 1)
+            tendencia = "sin cambios"
+            for j in range(1, len(notas_materia)):
+                if notas_materia[j] > notas_materia[j - 1]:
+                    tendencia = "mejorando"
+                elif notas_materia[j] < notas_materia[j - 1]:
+                    tendencia = "empeorando"
+                    break
+            datos_materias.append({
+                "materia": materia,
+                "notas": notas_materia,
+                "promedio": promedio,
+                "tendencia": tendencia
+            })
+
+    if datos_materias:  # Verifica si hay datos para calcular el promedio general
+        promedio_general = round(sum(d["promedio"] for d in datos_materias) / len(datos_materias), 1)
+        mejor_materia = max(datos_materias, key=lambda x: x["promedio"])["materia"]
+        materias_ordenadas = sorted(datos_materias, key=lambda x: x["promedio"], reverse=True)
+    else:
+        promedio_general = 0
+        mejor_materia = None
+        materias_ordenadas = []
+
+    context = {
+        'datos_materias': datos_materias,
+        'promedio_general': promedio_general,
+        'mejor_materia': mejor_materia,
+        'materias_ordenadas': materias_ordenadas,
+    }
+    return render(request, 'home/analisisnota.html', context)
+
+# Relación de materias con áreas de estudio
+areas_estudio = {
+    "negocios": ["historia", "matematicas", "lenguaje", "ingles"],
+    "construccion": ["matematicas", "tecnologia"],
+    "informatica": ["matematicas", "tecnologia", "ingles"],
+    "medicina": ["ciencias", "lenguaje"],
+    "mecanica": ["tecnologia", "matematicas"],
+    "electricidad": ["tecnologia", "matematicas", "ciencias"],
+    "prevencion_riesgos": ["ciencias", "tecnologia"]
+}
+
+def calcular_promedios_areas():
+    promedios_areas = {}
+    
+    for area, materias_area in areas_estudio.items():
+        notas_area = []
+        
+        for materia in materias_area:
+            # Obtener la asignatura correspondiente
+            asignatura = Asignatura.objects.filter(nombre_asig=materia).first()
+            
+            if asignatura:
+                # Obtener las calificaciones para esta asignatura
+                calificaciones = Calificaciones.objects.filter(asignatura=asignatura)
+                
+                # Recoger todas las notas de la asignatura
+                for calificacion in calificaciones:
+                    if calificacion.eva1 is not None:
+                        notas_area.append(calificacion.eva1)
+                    if calificacion.eva2 is not None:
+                        notas_area.append(calificacion.eva2)
+                    if calificacion.eva3 is not None:
+                        notas_area.append(calificacion.eva3)
+        
+        # Calcular el promedio del área
+        if notas_area:
+            promedio_area = sum(notas_area) / len(notas_area)
+        else:
+            promedio_area = 0  # O un valor que indique que no hay notas disponibles
+        
+        promedios_areas[area] = promedio_area
+    
+    return promedios_areas
+
+@login_required(login_url="/login/")
+def notasal(request):
+    alumno = get_object_or_404(Alumno, user=request.user)
+    
+    # Obtener todas las calificaciones del alumno
+    calificaciones = Calificaciones.objects.filter(alumno=alumno)
+    
+    # Generar datos de materias para el contexto
+    datos_materias = []
+    for calificacion in calificaciones:
+        datos_materias.append({
+            'materia': calificacion.asignatura.nombre_asig,
+            'notas': [calificacion.eva1, calificacion.eva2, calificacion.eva3]
+        })
+    
+    # Calcular promedios y otros datos si es necesario
+    promedios_areas = calcular_promedios_areas()
+
+    context = {
+        'datos_materias': datos_materias,
+        'promedios_areas': promedios_areas,
+    }
+
+    return render(request, 'home/notasal.html', context)
+
+<<<<<<< HEAD
 def notas(request):
     segment = 'notas.html'
     context = {'segment': segment}
@@ -106,6 +303,9 @@ def notas(request):
 
 
 
+=======
+@login_required(login_url="/login/")
+>>>>>>> 9cfea19a383b0b51be4c0101e508693aed125eb3
 def testvocacional(request):
 
 
@@ -236,6 +436,7 @@ def testvocacional(request):
             {'opcion': 'I', 'texto': 'Organizar eventos y coordinar servicios turísticos.'}  # Turismo y Hotelería
         ]}]
 
+<<<<<<< HEAD
     context = {'preguntas': preguntas}  # EH aquí está el cambio
 
     if request.method == 'POST':
@@ -244,6 +445,23 @@ def testvocacional(request):
         if all(f'pregunta_{i+1}' in respuestas for i in range(len(preguntas))):
             puntuaciones = {f'pregunta_{i+1}': respuestas.get(f'pregunta_{i+1}') for i in range(len(preguntas))}
 #guardado
+=======
+    context = {'preguntas': preguntas}
+
+    if request.method == 'POST':
+        respuestas = {key: request.POST[key] for key in request.POST.keys() if key.startswith('pregunta_')}
+        print(respuestas)  # Depuración: muestra todas las respuestas recibidas
+
+        # Verificación de preguntas
+        if all(f'pregunta_{i+1}' in respuestas for i in range(len(preguntas))):
+            puntuaciones = {
+                f'pregunta_{i+1}': respuestas.get(f'pregunta_{i+1}') for i in range(len(preguntas))
+            }
+            # Depuración: muestra las puntuaciones obtenidas
+            print(puntuaciones)
+
+            # Cálculo de puntajes y determinación del resultado
+>>>>>>> 9cfea19a383b0b51be4c0101e508693aed125eb3
             puntajes = {
                 'Ingeniería Civil': 0,
                 'Medicina': 0,
@@ -275,6 +493,7 @@ def testvocacional(request):
                     puntajes['Tecnología de la Información'] += 1
                 elif respuesta == 'I':
                     puntajes['Turismo y Hotelería'] += 1
+<<<<<<< HEAD
 #sacarpuntaje mas alto
             max_puntaje = max(puntajes.values())
             max_puntajes = [key for key, value in puntajes.items() if value == max_puntaje]
@@ -298,7 +517,57 @@ def testvocacional(request):
 #///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+=======
+
+            # Determinar la vocación con mayor puntaje
+            max_puntaje = max(puntajes.values())
+            max_vocaciones = [key for key, value in puntajes.items() if value == max_puntaje]
+
+            # Preparar el resultado
+            if len(max_vocaciones) > 1:
+                resultado = "Hay un empate entre varias opciones vocacionales."
+            else:
+                resultado = f"Tu perfil es: {max_vocaciones[0]}"
+
+            # Devolver el resultado según sea necesario (JSON o HTML)
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({'resultado': resultado})
+            else:
+                context['resultado'] = resultado
+                html_template = loader.get_template('home/testvocacional.html')
+                return HttpResponse(html_template.render(context, request))
+
+        else:
+            # Error por no responder todas las preguntas
+            error_message = "Debes responder todas las preguntas."
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({'error_message': error_message}, status=400)
+            else:
+                context['error_message'] = error_message
+                html_template = loader.get_template('home/testvocacional.html')
+                return HttpResponse(html_template.render(context, request))
+
+    # Si es una solicitud GET inicial, renderizar la página con el formulario
+    return render(request, 'home/testvocacional.html', context)
+>>>>>>> 9cfea19a383b0b51be4c0101e508693aed125eb3
 
 def cuestionario(request):
     context = {'segment': 'cuestionario'}
     return render(request, 'home/cuestionario.html', context)
+
+@login_required(login_url="/login/")
+def asignaturas(request, id_añocurso):
+    profesor_logueado = request.user.profesor
+    
+    # Obtener el objeto AñoCurso basado en el id proporcionado
+    año_curso = AñoCurso.objects.get(id_añocurso=id_añocurso)
+    
+    # Filtra las asignaturas por el profesor logueado y el curso especificado
+    asignaturas = Asignatura.objects.filter(profesor=profesor_logueado, curso_id=id_añocurso)
+    
+    context = {
+        'asignaturas': asignaturas,
+        'año_curso': año_curso
+    }
+    return render(request, 'home/asignaturas.html', context)
+

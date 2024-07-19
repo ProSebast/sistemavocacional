@@ -1,0 +1,31 @@
+{% extends "layouts/base.html" %}
+{% block title %} Asignaturas {% endblock %} 
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="alumnos-page">
+    
+    <div class="seccion-container">
+        <!-- Título de la sección -->
+        <h1 class="tituloasig">Asignaturas {{ año_curso.nombre }}</h1>
+        
+        {% if asignaturas %}
+        {% for asignatura in asignaturas %}
+        <div class="seccion-card" data-simplebar>
+            <a href="{% url 'alumnos' asignatura.id_asignatura %}" style="text-decoration: none; color: inherit; cursor: pointer;">
+                <h2 style="padding: 20%;">{{ asignatura.nombre_asig }}</h2>
+                <p>Profesor: {{ asignatura.profesor }}</p>
+            </a>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>No hay asignaturas disponibles para este curso.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block javascripts %}{% endblock javascripts %}

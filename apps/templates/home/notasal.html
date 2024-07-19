@@ -1,0 +1,99 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Ver Notas {% endblock %}
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="notas-page"> 
+    <div class="notas-container" data-simplebar>
+        <h1 class="notash1">Notas</h1>
+    
+        <form id="notasform" class="row" method="post">
+            {% csrf_token %}
+            <table class="item large">
+                <thead>
+                    <tr>
+                        <th>Materia</th>
+                        <th>Evaluación 1</th>
+                        <th>Evaluación 2</th>
+                        <th>Evaluación 3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dato in datos_materias %}
+                    <tr>
+                        <td>{{ dato.materia }}</td>
+                        <td>
+                            {% if dato.notas|length > 0 and dato.notas.0 %}
+                                <label>{{ dato.notas.0 }}</label>
+                            {% else %}
+                                <label>No disponible</label>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if dato.notas|length > 1 and dato.notas.1 %}
+                                <label>{{ dato.notas.1 }}</label>
+                            {% else %}
+                                <label>No disponible</label>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if dato.notas|length > 2 and dato.notas.2 %}
+                                <label>{{ dato.notas.2 }}</label>
+                            {% else %}
+                                <label>No disponible</label>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <div class="notas-btn1 item small">
+                <button id="botonSubmit" type="submit">
+                    <span class="material-symbols-outlined">
+                        assignment
+                    </span>
+                </button>
+            </div>
+        </form>
+        <br><br><br>    
+        <div class="row">
+            <div>
+                <h1 class="notash1">Promedios por Área de Estudio</h1>
+                <table class="item large">
+                    <thead>
+                        <tr>
+                            <th>Área de Estudio</th>
+                            <th>Promedio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for area, promedio in promedios_areas.items %}
+                        <tr>
+                            <td>{{ area }}</td>
+                            <td style="font-weight: 500;">{{ promedio }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="button-container item small">
+                <button>
+                    <a href="{% url 'analisisnota' %}">
+                        <span class="material-symbols-outlined">
+                            chevron_left
+                        </span>
+                    </a>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block javascripts %}{% endblock javascripts %}
