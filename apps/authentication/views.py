@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, SignUpForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from django.shortcuts import redirect
 
 
 
@@ -54,3 +56,9 @@ def register_user(request):
         form = SignUpForm()
 
     return render(request, "accounts/register.html", {"form": form, "msg": msg, "success": success})
+
+
+
+def custom_logout_view(request):
+    logout(request)
+    return redirect('/login/')
