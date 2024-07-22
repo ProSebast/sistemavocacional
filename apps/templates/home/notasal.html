@@ -73,7 +73,7 @@
                         {% for area, promedio in promedios_areas.items %}
                         <tr>
                             <td>{{ area }}</td>
-                            <td style="font-weight: 500;">{{ promedio }}</td>
+                            <td style="font-weight: 500;">{{ promedio|floatformat:2 }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
